@@ -1,0 +1,34 @@
+<h1>Your Pragmatic Catalog</h1>
+
+<% @products.each do |product| -%>
+  <div class="entry">
+    <!-- <%= image_tag(product.image_url) %> -->
+    <!--<%= link_to image_tag(product.image_url), 
+       { :action  => :add_to_cart, :id => product },
+         :method  => :post %> -->
+
+<% form_remote_tag :url => { :action => :add_to_cart, :id => product } do %> 
+    <%= image_submit_tag (product.image_url, :alt => product.title, :title => "Adicionar ao carrinho", :class => "pic") -%>
+<% end %>
+
+    <h3><%=h product.title %></h3>
+    <%= product.description %>
+    <div class="price-line">
+    <span class="price"><%= number_to_currency(product.price) %></span>
+    <!-- START_HIGHLIGHT -->
+    <!-- START:add_to_cart -->
+<!--    <%= button_to 'Add to Cart', :action => 'add_to_cart', :id => product %> -->
+
+<% form_remote_tag :url => { :action => 'add_to_cart', :id => product } do %>
+<%= submit_tag "+" %>
+<% end %>
+
+<% form_remote_tag :url => { :action => 'remove_from_cart', :id => product } do %>
+<%= submit_tag "-" %>
+<% end %>
+
+    <!-- END:add_to_cart -->
+    <!-- END_HIGHLIGHT -->
+    </div>
+  </div>  
+<% end %>
